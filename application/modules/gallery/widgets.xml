@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widgets>
+
+    <widget>
+        <title>Последние изображения</title>
+        <description>Отображение последних добавленных в галерею изображений.</description>
+        <method>latest_fotos</method>
+    </widget>
+
+</widgets>

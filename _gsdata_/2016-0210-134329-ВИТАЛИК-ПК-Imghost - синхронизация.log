@@ -1,0 +1,39 @@
+FTP: Use MLST/MLSD command to list files
+----- 10.02.2016 13:43:29: Задание 'Imghost - синхронизация': АНАЛИЗ запустил User на компьютере 'ВИТАЛИК-ПК' (GoodSync вер. 9.2.4.4 x86 on Windows 7) -----
+Imghost - синхронизация: A:\imghost.vit =forced-PropDels=> ftp://vitaliy43.ru/www/imghost.vitaliy43.ru [no-proxy], SavePrevVers, CleanupPrevVers=30d, CleanupOldGens=24m, TmpDest, EstReq, CopyLocked, DetectMovesAndRenames, DetectFolderMoves, FileLinksDrill, Reconnect=3, CopyCreateTime
+Искл. Скрытые, Искл. Системные, Исключено /.idea|/.svn|/logs|/media|/system|/uploads|/user_guide|/xajax_js|Articler.clpprj|/application/config/config.php|/application/config/database.php|/.htaccess|/webstat|/js|/cron.php|/sxd|/phpmyadmin|/ckeditor|/templates/default|/application/modules/articler/module_info.php|/captcha|/application/modules/cfcm|/application/modules/comments|/application/modules/filter|/application/modules/forms|/application/modules/gallery|/application/modules/menu|/application/modules/navigation|/application/modules/polls|/application/modules/rss|/application/modules/search|/application/modules/sitemap|/application/modules/migration|/robots.txt|informpage.html|/imghost.vit.clpprj|/index2.html|/application/config/constants.php|/application/cron|/index.php|licens*.rfo|cache.rfo|mru.rfo|mpp*.rfo|RoboForm Online Account.rfp|name *._gstmp|/System Volume Information|Thumbs.db|.DS_Store|/.svn|.svn-base 
+Слева: Читаю файл состояний A:\imghost.vit\_gsdata_\_file_state_v4._gs
+Пропущена ссылка на папку A:\imghost.vit\backend -> junction:A:\imghost.vit\application\modules\imghost
+Пропущена ссылка на папку A:\imghost.vit\cache -> junction:A:\imghost.vit\system\cache\templates_c
+Пропущена ссылка на папку A:\imghost.vit\frontend -> junction:A:\imghost.vit\templates\imghost
+Слева: Файлов: 1 402 (исключено 6). Папок: 410 (исключено 429). A: NTFS, Свободно: 14,4 ГБ, Всего: 160 ГБ
+Справа: Читаю файл состояний ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/_gsdata_/_file_state_v4._gs
+Справа: Файлов: 1 402 (исключено 6). Папок: 789 (исключено 16). FTP: ProFTPD 1.3.4a Server (Debian) [::ffff:37.230.117.217]
+Тебуемый размер для синхронизации на диске file:///A: : 0 байт, у Вас имеется 14,4 ГБ
+Тебуемый размер для синхронизации на диске ftp://vitaliy43.ru : 171 КБ, у Вас имеется 0 байт
+Изменений: 9, Конфликтов: 0, Копий Времени: 0, Копий Состояния: 0/0, Ошибок: 0
+Left to Right: Copy File: 9 
+All Nodes (Live+Dead): 2273
+----- 10.02.2016 13:44:45: Анализ завершён. Время 00:01:16, Скорость: 140 файлов/сек -----
+
+FTP: Use MLST/MLSD command to list files
+===== 10.02.2016 13:47:58: Задание 'Imghost - синхронизация': СИНХРОНИЗАЦИЮ запустил User на компьютере 'ВИТАЛИК-ПК' =====
+Imghost - синхронизация: A:\imghost.vit =forced-PropDels=> ftp://vitaliy43.ru/www/imghost.vitaliy43.ru [no-proxy], SavePrevVers, CleanupPrevVers=30d, CleanupOldGens=24m, TmpDest, EstReq, CopyLocked, DetectMovesAndRenames, DetectFolderMoves, FileLinksDrill, Reconnect=3, CopyCreateTime
+Locking folder A:\imghost.vit for write
+Locking folder ftp://vitaliy43.ru/www/imghost.vitaliy43.ru for write
+Скопировано поверх 'A:\imghost.vit\application\helpers\image_helper.php' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/application/helpers/image_helper.php'
+Скопировано поверх 'A:\imghost.vit\application\helpers\view_helper.php' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/application/helpers/view_helper.php'
+Скопировано поверх 'A:\imghost.vit\application\modules\imghost\imghost.php' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/application/modules/imghost/imghost.php'
+Скопировано поверх 'A:\imghost.vit\application\modules\imghost\language\ru_RU\upload.php' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/application/modules/imghost/language/ru_RU/upload.php'
+Скопировано поверх 'A:\imghost.vit\application\modules\imghost\models\my_upload.php' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/application/modules/imghost/models/my_upload.php'
+Скопировано поверх 'A:\imghost.vit\templates\imghost\js\ajax.js' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/templates/imghost/js/ajax.js'
+Скопировано поверх 'A:\imghost.vit\templates\imghost\js\functions.js' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/templates/imghost/js/functions.js'
+Скопировано поверх 'A:\imghost.vit\templates\imghost\layouts\main.tpl' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/templates/imghost/layouts/main.tpl'
+Скопировано поверх 'A:\imghost.vit\templates\imghost\pages\image.tpl' -> 'ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/templates/imghost/pages/image.tpl'
+Сохраняю файл состояний A:\imghost.vit\_gsdata_\_file_state_v4._gs
+Сохраняю файл состояний ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/_gsdata_/_file_state_v4._gs
+Синхронизировано: 9, Ошибок: 0
+===== 10.02.2016 13:48:05: Синхронизация завершена. Время 00:00:08, Скорость: 87,4 КБ/s (27,6 КБ/s) файлов/сек =====
+Unlocking folder (set insync file) A:\imghost.vit\_gsdata_\_insync_v4.gsl
+Unlocking folder (set insync file) ftp://vitaliy43.ru/www/imghost.vitaliy43.ru/_gsdata_/_insync_v4.gsl
+

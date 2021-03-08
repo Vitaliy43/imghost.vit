@@ -1,0 +1,10 @@
+User-agent: *
+Disallow: /profile
+Disallow: /admin
+Disallow: /user
+Disallow: /forgot_password
+Disallow: /register
+Disallow: /?tagname
+
+Host: imghost.pro
+Sitemap: http://imghost.pro/sitemap_index.xml

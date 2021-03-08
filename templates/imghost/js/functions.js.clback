@@ -1,0 +1,553 @@
+function myAlert(text){
+	
+	jAlert(text,'IMGHOST.PRO"');
+}
+
+function get_browser(){
+	var useragent=navigator.userAgent;
+	var navigatorname;
+	if (useragent.indexOf('MSIE')!= -1)
+	{
+    navigatorname="MSIE";
+	}
+	else if (useragent.indexOf('Gecko')!= -1)
+	{
+    	if (useragent.indexOf('Chrome')!= -1)
+    		navigatorname="Google Chrome";
+    	else navigatorname="Mozilla";
+	}
+	else if (useragent.indexOf('Mozilla')!= -1)
+	{
+    	navigatorname="old Netscape or Mozilla";
+	}
+	else if (useragent.indexOf('Opera')!= -1)
+	{
+    	navigatorname="Opera";
+	}
+	return navigatorname;
+}
+
+function add_upload_fields(url){
+	
+	var content = $('.five-more').html();
+
+	$.ajax({
+	type: "POST",
+    url: url,
+	dataType: 'json',
+    cache: false,
+	beforeSend:function(){
+		$('.five-more').html('<div class="ajax_loader"><img src="'+ajax_small_url+'"></div>');	
+	},
+	error: function(){
+		$('.five-more').html(content);
+		myAlert('Ошибка загрузки!');
+	},
+    success: function(data){
+		$('.five-more').html(content);
+		$('.item :last').after(data.content);
+		var counter = 1;
+		$(".upload-fields form").each(function(){
+			var form_id = 'form'+counter;
+		$(this).attr({'id':form_id});
+		$('#'+form_id+' #current_form').val(counter);
+		counter++;
+			
+		
+	}); 
+		}
+    });
+}
+
+function str_replace(search, replace, subject) {
+	return subject.split(search).join(replace);
+}
+
+function ajaxFileUpload(main_url)
+	{
+	
+	
+		$("#loading")
+		.ajaxStart(function(){
+			$(this).show();
+		})
+		.ajaxComplete(function(){
+			$(this).hide();
+		});
+		
+
+
+		$.ajaxFileUpload
+		(
+			{	
+				url:'/uploads/ajaxfileupload.php',
+				secureuri:false,
+				fileElementId:'UPLOADED_FILE',
+				dataType: 'json',
+				data:{name:'logan', id:'id'},
+				cache: false,
+				success: function (data, status)
+				{
+					if(typeof(data.error) != 'undefined')
+					{
+					
+						if(data.error != '')
+						{
+							alert(data.error);
+						}else
+						{
+//								$('#container_avatar').html(data.content);
+								console.log(data.content);
+							
+								
+						}
+						
+					}
+					
+				},
+				error: function (data, status, e)
+				{
+					
+					//myAlert(e);
+				}
+			}
+		)
+		
+		return false;
+			
+	}
+	
+	function dump(obj) {
+    var out = "";
+    if(obj && typeof(obj) == "object"){
+        for (var i in obj) {
+            out += i + ": " + obj[i] + "\n";
+        }
+    } else {
+        out = obj;
+    }
+    alert(out);
+}
+
+	var beginned_modal = 0;
+	var width_col1 = 0;
+	var width_col2 = 0;
+	var width_col3 = 0;
+	var new_width_col1 = 0;
+	var new_width_col2 = 0;
+	var new_width_col3 = 0;
+	var modal_left = 0;
+	var width_modal = 640;
+
+
+	function update_image(object,id){
+		
+		var	ajax_url = '/templates/imghost/images/ajax-loaders/small.gif';
+		var empty_fields = true;
+		var resize_to = $('#sb-wrapper #resize_to').val();
+		var resize_what = $('#sb-wrapper #resize_what').val();
+		var rotate = $('#sb-wrapper #rotate').val();
+		var name = $('#sb-wrapper #name').val();
+		var convert_to = $('#sb-wrapper #convert_to').val();
+		var description = $('#sb-wrapper #description').val();
+		var watermark = $('#sb-wrapper #watermark').val();
+		var container = $('#sb-wrapper .submit').html();
+
+		if(resize_to != '')
+			empty_fields = false;
+		if(resize_what != 'none')
+			empty_fields = false;
+		if(rotate != 0)
+			empty_fields = false;
+		if(name != '')
+			empty_fields = false;
+		if(convert_to != '')
+			empty_fields = false;
+		if(description != '')
+			empty_fields = false;
+		if(watermark != '')
+			empty_fields = false;
+		if(empty_fields == true)
+			return false;
+		name = encodeURIComponent(name);
+		description = encodeURIComponent(description);
+		watermark = encodeURIComponent(watermark);
+		var height_modal = $('#sb-wrapper-inner').height()+'px';
+		var width_modal = $('#sb-wrapper-inner').width()+'px';
+		
+		$.ajax({
+		type: "POST",
+   	 	url: object.action,
+		dataType: 'json',
+		data: 'is_ajax=1&is_update=1&RESIZE_TO'+resize_to+'&RESIZE_WHAT='+resize_what+'&ROTATE='+rotate+'&NAME='+name+'&CONVERT_TO='+convert_to+'&DESCRIPTION='+description+'&WATERMARK='+watermark,
+    	cache: false,
+		beforeSend:function(){
+			$('#sb-player .submit').html('<div class="ajax_loader"><img src="'+ajax_url+'"></div>');	
+		},
+		error: function(){
+			$('#sb-player .submit').html(container);
+			alert('Ошибка загрузки!');
+		},
+    	success: function(data){
+			if(data.answer == 1){
+				$('#row_'+id+' .file_preview').html(data.preview);
+				$('#row_'+id+' .file_name').html(data.show_filename);
+				$('#row_'+id+' .file_size').html(data.size);
+				$('#row_'+id+' .file_ext').html(data.ext);
+				$('#row_'+id+' .file_comment').html(data.comment);
+				Shadowbox.close();
+			}
+			else{
+					$('#sb-player .submit').html(container);
+					alert('Неизвестная ошибка!');
+			}
+		}
+    	});
+	}
+
+	function edit_image(object,id){
+		
+		var preview_width = $('#row_'+id+' .preview_width').val();
+		var preview_height = $('#row_'+id+' .preview_height').val();
+		var preview_src = $('#row_'+id+' a').attr('href');
+		var	ajax_url = '/templates/imghost/images/ajax-loaders/small.gif';
+		var container = $(object).parent();
+		var container_link = $(object).parent().html();
+
+		$.ajax({
+		type: "POST",
+   	 	url: object.href,
+		dataType: 'json',
+		data: 'is_ajax=1&width='+preview_width+'&height='+preview_height+'&src='+preview_src,
+    	cache: false,
+		beforeSend:function(){
+			$(object).replaceWith('<div class="ajax_loader"><img src="'+ajax_url+'"></div>');	
+		},
+		error: function(){
+			$(object).html(container_link);
+			alert('Ошибка загрузки!');
+		},
+    	success: function(data){
+			$(container).html(container_link);
+			$('#container_modal').html(data.content);
+			var height_modal = $('#container_modal').height();
+			beginned_modal = 0;
+			
+			Shadowbox.open({
+        	content:    data.content,
+        	player:     "html",
+        	title:      "Редактирование изображения",
+			width: width_modal,
+			left: 200,
+			height: height_modal,
+			overlayOpacity: 0.7,
+			handleOversize: 'resize'
+    		});	
+			
+		}
+    	});
+		
+	}
+	
+	
+	function show_field(object,type_col){
+		var hidden = $(object).next();
+		var add_to_modal_width = hidden.next().val();
+		var old_width = $('#sb-player #edit_image').width();
+		var wrapper_width = $('#sb-wrapper').width();
+		if(modal_left == 0){
+			modal_left = $('#sb-wrapper').css('left');
+			modal_left = str_replace('px','',modal_left);
+		}
+
+
+		if(width_col1 == 0)
+			width_col1 = $('#sb-player .col_1').parent().width();
+		if(width_col2 == 0)
+			width_col2 = $('#sb-player .col_2').parent().width();
+		if(width_col3 == 0)
+			width_col3 = $('#sb-player .col_3').parent().width();
+
+		var cols1 = $('#sb-player .col_1:visible').size();
+		var cols2 = $('#sb-player .col_2:visible').size();
+		var cols3 = $('#sb-player .col_3:visible').size();
+		$(object).hide();
+		hidden.show();
+		var new_width = $('#sb-player #edit_image').width();
+
+		var add = 0;
+		if(type_col == 'col1'){
+			if(new_width_col2 > width_col2)
+				add += new_width_col2 - width_col2;
+			if(new_width_col3 > width_col3)
+				add += new_width_col3 - width_col3;
+				add +=20;
+		}
+		else if(type_col == 'col2'){
+			if(new_width_col1 > width_col1)
+				add += new_width_col1 - width_col1;
+			if(new_width_col3 > width_col3)
+				add += new_width_col3 - width_col3;
+			add +=20;
+
+		}
+		else if(type_col == 'col3'){
+			if(new_width_col2 > width_col2)
+				add += new_width_col2 - width_col2;
+			if(new_width_col1 > width_col1)
+				add += new_width_col1 - width_col1;
+			add +=20;
+
+		}
+
+		var new_wrapper_width = 640 + add_to_modal_width*1 + add;
+		var buffer_add = add + add_to_modal_width*1;
+			
+		if(new_wrapper_width > wrapper_width)
+			$('#sb-wrapper').width(new_wrapper_width);
+		new_width_col1 = $('#sb-player .col_1').parent().width();
+		new_width_col2 = $('#sb-player .col_2').parent().width();
+		new_width_col3 = $('#sb-player .col_3').parent().width();
+		
+		if(buffer_add > 0){
+			var new_modal_left = modal_left - Math.round(buffer_add/2);
+			$('#sb-wrapper').css({'left':new_modal_left});
+		}
+
+	}
+	
+	function hide_field(object,type_col){
+		var old_width = $('#sb-player #edit_image').width();
+		
+		var new_width = $('#sb-player #edit_image').width();
+		var hidden = $(object).parent();
+		var hidden_link = hidden.prev();
+		var buffer_width_col = new_width_col1;
+		hidden.hide();
+		hidden_link.show();
+		var wrapper_width = $('#sb-wrapper').width();
+		var add_to_modal_width = $(object).parent().next().val();
+
+		new_width_col1 = $('#sb-player .col_1').parent().width();
+		new_width_col2 = $('#sb-player .col_2').parent().width();
+		new_width_col3 = $('#sb-player .col_3').parent().width();
+
+		max_width1 = 0;
+		max_width2 = 0;
+		max_width3 = 0;
+
+		$("#sb-player .col_1:visible").each(function(){
+        if($(this).next().val() > max_width1)
+			max_width1 = $(this).next().val();
+			
+		});
+		
+		$("#sb-player .col_2:visible").each(function(){
+        if($(this).next().val() > max_width2)
+			max_width2 = $(this).next().val();
+			
+		});
+		
+		$("#sb-player .col_3:visible").each(function(){
+        if($(this).next().val() > max_width3)
+			max_width3 = $(this).next().val();
+			
+		});
+		
+		max_width1 *=1;
+		max_width2 *=1;
+		max_width3 *=1;
+		var add = (max_width1 + max_width2 + max_width3)+20;
+		var new_wrapper_width = width_modal + add;
+
+		$('#sb-wrapper').width(new_wrapper_width);
+		var buffer_add = add + add_to_modal_width*1;
+			
+		if(new_wrapper_width < wrapper_width)
+			$('#sb-wrapper').width(new_wrapper_width);
+	
+		
+		if(buffer_add > 0){
+			var new_modal_left = modal_left + Math.round(buffer_add/2);
+			$('#sb-wrapper').css({'left':new_modal_left});
+		}
+
+	}
+	
+	function show_image(object){
+		
+		Shadowbox.open({
+        	content: object.href,
+        	player:     "img",
+			continuous: true
+    	});	
+	}
+	
+	function delete_image(object,id,message){
+		
+		var	ajax_url = '/templates/imghost/images/ajax-loaders/small.gif';
+		var container = $(object).parent();
+		var container_row = $(object).parent().parent();
+		var container_link = $(object).parent().html();
+		if(confirm(message)){
+			
+		$.ajax({
+		type: "POST",
+   	 	url: object.href,
+		dataType: 'json',
+		data: 'is_ajax=1',
+    	cache: false,
+		beforeSend:function(){
+			$(object).replaceWith('<div class="ajax_loader"><img src="'+ajax_url+'"></div>');	
+		},
+		error: function(){
+			$(object).html(container_link);
+			alert('Ошибка загрузки!');
+		},
+    	success: function(data){
+			if(data.answer == 1){
+				container_row.remove();
+				var height_image_table = $('.image_list table').height();
+				var curr_overflow = $('.image_list').css('overflow-y');
+				if(height_image_table > 520){
+					$('.image_list').css({'overflow-y' : 'scroll'});
+				}
+				else{
+					if(curr_overflow == 'scroll')
+						$('.image_list').css({'overflow-y' : 'hidden'});
+
+				}
+				var sizes = $('.image_list table tr').size();
+				if(sizes == 1){
+					var curr_page = $('#container_profile .pagination strong').text();
+					var page = (curr_page*1) - 1;
+					if(curr_page != 1){
+						paginate_link('/profile/'+page);
+					}
+
+				}
+			}
+			else{
+				$(object).html(container_link);
+				alert('Неизвестная ошибка!');
+			}
+			
+		}
+    	});
+		}
+
+		
+	}
+	
+	function paginate_link(url){
+		
+		var	ajax_url = '/templates/imghost/images/ajax-loaders/big.gif';
+		var container = $('#content .wrap960').html();
+		
+		$.ajax({
+		type: "POST",
+   	 	url: url,
+		dataType: 'json',
+		data: 'is_ajax=1',
+    	cache: false,
+		beforeSend:function(){
+			$('#content .wrap960').html('<div class="ajax_loader" style="padding-left:350px;padding-top:250px;"><img src="'+ajax_url+'"></div>');	
+		},
+		error: function(){
+			$('#content .wrap960').html(container);
+			alert('Ошибка загрузки!');
+		},
+    	success: function(data){
+			if(data.answer == 1){
+				$('#content .wrap960').html(data.content);
+				Shadowbox.init();
+
+
+			}
+			else{
+				$('#content .wrap960').html(container);
+				alert('Неизвестная ошибка!');
+			}
+			
+		
+		}
+    	});
+		
+	}
+	
+	function load_more_hash(){
+		
+		var	ajax_url = '/templates/imghost/images/ajax-loaders/big.gif';
+		var all_uploaded = $('#all_uploaded').val();
+		var items = $('#container_gallery .list-item').size();
+		var new_page = ($('#current_page').val())*1 + 1;
+		var buffer = document.location.hash;
+		var buffer2 = buffer.split('_');
+		if(buffer2[1] < 2)
+			return false;
+		
+		if(items < all_uploaded){
+			
+			$.ajax({
+			type: "POST",
+   	 		url: '/gallery/'+new_page,
+			dataType: 'json',
+			data: 'is_ajax=1&is_load_more=1&page='+buffer2[1],
+    		cache: false,
+			beforeSend:function(){
+				$('#container_gallery .list-item:last').after('<div class="list-item c8 gutter-margin-right-bottom privacy-public" data-id="" data-type="image"><div class="ajax_loader" style="height:300px; width:200px;padding: 150px;"><img src="'+ajax_url+'"></div></div>');	
+			},
+			error: function(){
+				$('#container_gallery .list-item:last').remove();
+				alert('Ошибка загрузки!');
+			},
+    		success: function(data){
+				$('#container_gallery .list-item:last').remove();
+				if(data.answer == 1){
+					$('#container_gallery .list-item:last').after(data.content);
+					$('#current_page').val(buffer2[1]);
+				}
+				else{
+					alert('Неизвестная ошибка!');
+				}
+			
+			}
+    		});
+			
+		}
+		
+	}
+	
+	function load_more(){
+		
+		
+			
+			$.ajax({
+			type: "POST",
+   	 		url: '/gallery/'+new_page,
+			dataType: 'json',
+			data: 'is_ajax=1&is_load_more=1',
+    		cache: false,
+			beforeSend:function(){
+				$('#container_gallery .list-item:last').after('<div class="list-item c7 gutter-margin-right-bottom privacy-public" data-id="" data-type="image"><div class="ajax_loader" style="height:300px; width:200px;padding: 150px;"><img src="'+ajax_url+'"></div></div>');	
+			},
+			error: function(){
+				$('#container_gallery .ajax_loader').parent().remove();
+				alert('Ошибка загрузки!');
+			},
+    		success: function(data){
+				$('#container_gallery .ajax_loader').parent().remove();
+				if(data.answer == 1){
+					$('#container_gallery .list-item:last').after(data.content);
+					$('#current_page').val(new_page);
+//					document.location.hash = 'p_'+new_page;
+				}
+				else{
+					alert('Неизвестная ошибка!');
+				}
+			
+			}
+    		});
+			
+		
+	}
